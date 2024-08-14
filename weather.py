@@ -27,13 +27,30 @@ def get_current_weather(city):
         return None
     
 def get_city_coordinates(city):
-    ""
+    params = {
+        'q': city,
+        'appid': API_KEY
+    }
+    response = requests.get(BASE_URL, params=params)
+    if response.status_code == 200:
+        data = response.json()
+        return data['coord']['lat'], data['coord']['lon']
+    else:
+        print(f"Error: {response.status_code}, {response.text}")
+        return None
 
 def get_forecast(city):
     ""
 
-def get_uv_index(lat, lon):
-    ""
+def get_uv_index(city):
+    lat, lon = get_city_coordinates(city)
+    params = {
+        'lat': lat,
+        'lon': lon,
+        'appid': API_KEY
+    }
+    response = requests.get("http://api.openweathermap.org/data/2.5/uvi", params=params)
+    return response.json()['value']
 
 def generate_report(city):
     ""
@@ -41,7 +58,7 @@ def generate_report(city):
 
 if __name__ == "__main__":
     city = "Lagrange"
-    get_current_weather(city)
+    print(get_uv_index(city))
 
 
 """"
