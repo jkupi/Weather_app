@@ -4,9 +4,9 @@ from datetime import datetime
 from collections import defaultdict
 # import socket
 
-def get_current_weather(city):
+def get_current_weather(query):
     params = {
-        'q': city,
+        'q': query,
         'appid': API_KEY,
         'units': 'imperial'
     }
@@ -29,9 +29,9 @@ def get_current_weather(city):
         print(f'Error: {response.status_code}, {response.text}')
         return None
     
-def get_city_coordinates(city):
+def get_city_coordinates(query):
     params = {
-        'q': city,
+        'q': query,
         'appid': API_KEY
     }
     response = requests.get(f"{BASE_URL}/weather", params=params)
@@ -42,8 +42,8 @@ def get_city_coordinates(city):
         print(f"Error: {response.status_code}, {response.text}")
         return None
 
-def get_5_day_forecast(city):
-    lat, lon = get_city_coordinates(city)
+def get_5_day_forecast(query):
+    lat, lon = get_city_coordinates(query)
     params = {
         'lat': lat,
         'lon': lon,
@@ -118,10 +118,14 @@ def generate_report(city):
 
 if __name__ == "__main__":
     city = "lagrange"
-    # get_current_weather(city)
-    # get_uv_index(city)
-    # get_city_coordinates(city)
-    get_5_day_forecast(city)
+    state = "GA"
+    country = "US"
+    location_query = f"{city},{state},{country}"
+    print(f"City: {city}")
+    # get_current_weather(location_query)
+    # get_uv_index(location_query)
+    # get_city_coordinates(location_query)
+    get_5_day_forecast(location_query)
 
 
     """
