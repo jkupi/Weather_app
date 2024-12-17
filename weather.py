@@ -134,15 +134,4 @@ if __name__ == "__main__":
         print(f"IP address of {host}: {socket.gethostbyname(host)}")
     except socket.gaierror as e:
         print(f"Error resolving {host}: {e}")
-        
-
-
-city_name = 'Lagrange'
-url = f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={API_KEY}'    
-response = requests.get(url)
-if response.status_code == 200:
-    data = response.json()
-    print(data)
-else:
-    print(f'Error: {response.status_code}, {response.text}')
-"""
+    """
